@@ -1,347 +1,2122 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Загрузка</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #000;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #fff;
-            padding: 20px;
-        }
-        
-        .container {
-            text-align: center;
-            width: 100%;
-            max-width: 320px;
-        }
-        
-        .loader {
-            margin-bottom: 40px;
-        }
-        
-        .circle {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #333;
-            border-top: 2px solid #fff;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            animation: spin 1s linear infinite;
-        }
-        
-        .status {
-            font-size: 14px;
-            color: #888;
-            font-weight: 300;
-        }
-        
-        .captcha-container {
-            display: none;
-            background: #111;
-            padding: 30px 25px;
-            border-radius: 12px;
-            border: 1px solid #222;
-            margin: 0 auto;
-        }
-        
-        .captcha-title {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #fff;
-            font-weight: 400;
-        }
-        
-        .puzzle-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .puzzle-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .puzzle-piece {
-            width: 50px;
-            height: 50px;
-            background: #222;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 500;
-            color: #fff;
-            transition: all 0.2s ease;
-            border: 1px solid #333;
-        }
-        
-        .puzzle-piece:active {
-            background: #333;
-            transform: scale(0.95);
-        }
-        
-        .puzzle-slot {
-            width: 50px;
-            height: 50px;
-            background: #000;
-            border: 1px dashed #333;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: #444;
-            transition: all 0.2s ease;
-            font-weight: 500;
-        }
-        
-        .puzzle-slot.filled {
-            background: #222;
-            border: 1px solid #444;
-            color: #fff;
-        }
-        
-        .captcha-button {
-            width: 100%;
-            padding: 14px;
-            background: #fff;
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 20px;
-        }
-        
-        .captcha-button:active {
-            background: #ccc;
-        }
-        
-        .captcha-button:disabled {
-            background: #333;
-            color: #666;
-            cursor: not-allowed;
-        }
-        
-        .error-message {
-            color: #ff4444;
-            font-size: 13px;
-            margin-top: 15px;
-            display: none;
-            font-weight: 400;
-        }
-        
-        .progress-container {
-            display: none;
-            margin-top: 30px;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 2px;
-            background: #222;
-            border-radius: 1px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: #fff;
-            transition: width 0.3s ease;
-        }
-        
-        .success-message {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 400;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cvapta Experiences - Halloween Special</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* CSS переменные для легкого управления тематикой */
+    :root {
+      --primary: #8B4513;
+      --secondary: #D2691E;
+      --dark: #1A1212;
+      --light: #FFF8DC;
+      --autumn-orange: #FF7F50;
+      --autumn-red: #B22222;
+      --autumn-yellow: #DAA520;
+      --autumn-gold: #FFD700;
+      
+      /* Glass Morphism Variables */
+      --glass-bg: rgba(44, 30, 30, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-border-highlight: rgba(255, 255, 255, 0.2);
+      --glass-blur: 12px;
+      --glass-saturation: 150%;
+      --control-radius: 16px;
+      --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Мобильные отступы */
+      --mobile-padding: 12px;
+      --mobile-margin: 8px;
+    }
+
+    /* Базовый сброс стилей с оптимизацией для мобильных */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html, body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, var(--dark) 0%, #2A1A1A 50%, #3A2A2A 100%);
+      color: var(--light);
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+      position: relative;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: manipulation;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: var(--mobile-padding);
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Частицы на фоне */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .bg-circles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(30px);
+      opacity: 0.25;
+      transform: translateZ(0);
+    }
+
+    .circle-1 {
+      width: 180px;
+      height: 180px;
+      top: -50px;
+      left: -50px;
+      background: linear-gradient(135deg, var(--autumn-orange), var(--autumn-red));
+    }
+
+    .circle-2 {
+      width: 150px;
+      height: 150px;
+      bottom: -30px;
+      right: -30px;
+      background: linear-gradient(135deg, var(--autumn-yellow), var(--autumn-gold));
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 500px;
+      z-index: 10;
+      position: relative;
+      padding-bottom: 20px;
+    }
+
+    /* Кнопка просмотра стадий */
+    .view-stages-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(139, 69, 19, 0.7);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+
+    .view-stages-btn:hover {
+      background: rgba(210, 105, 30, 0.8);
+      transform: translateY(-2px);
+    }
+
+    /* Новый стиль заголовка как в примере */
+    .header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      padding: 0 var(--mobile-margin);
+    }
+
+    .fluid {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      text-align: center;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px rgba(255, 127, 80, 0.7);
+    }
+
+    .logo {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--autumn-yellow), var(--autumn-orange), var(--autumn-red));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+      animation: logoGlow 3s infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      0% { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+      100% { filter: drop-shadow(0 4px 15px rgba(255, 127, 80, 0.7)); }
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      font-weight: 300;
+      opacity: 0.9;
+      color: rgba(255, 248, 220, 0.8);
+      line-height: 1.4;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    /* Новый стиль для отдельного таймера */
+    .countdown-container {
+      position: relative;
+      margin: 0 var(--mobile-margin) 1.5rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .countdown-timer {
+      position: relative;
+      background: linear-gradient(135deg, var(--autumn-red), var(--autumn-orange));
+      color: white;
+      padding: 16px 24px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      z-index: 4;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      white-space: nowrap;
+      border: 2px solid rgba(255,255,255,0.4);
+      min-width: 280px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      letter-spacing: 1px;
+      transition: var(--transition);
+      transform: translateZ(0);
+      animation: timerPulse 2s infinite alternate;
+    }
+
+    @keyframes timerPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.03); }
+    }
+
+    .countdown-timer:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    .countdown-timer.timer-expired {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      animation: pulseGlow 2s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { 
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+      }
+      50% { 
+        box-shadow: 0 8px 30px rgba(76, 175, 80, 0.8);
+      }
+    }
+
+    /* Спецэффекты за 15 секунд */
+    .countdown-timer.final-countdown {
+      animation: finalCountdown 1s infinite alternate;
+      background: linear-gradient(135deg, #ff0000, #ff4500);
+      text-shadow: 0 0 10px #fff;
+    }
+
+    @keyframes finalCountdown {
+      0% { 
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+      }
+      100% { 
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+      }
+    }
+
+    /* Убираем старый стиль таймера с карточки */
+    .game-card-container .countdown-timer {
+      display: none;
+    }
+
+    /* Новый стиль для игровых карточек с glass displacement */
+    .games-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    /* Делаем карточку с тыквой выше - меняем порядок в grid */
+    .game-card-container.halloween-card {
+      order: -1; /* Перемещаем наверх */
+    }
+
+    .game-card-container {
+      position: relative;
+      margin: 0 var(--mobile-margin);
+      cursor: pointer;
+      transform: translateZ(0);
+      will-change: transform;
+      border-radius: var(--control-radius);
+      overflow: hidden;
+    }
+
+    .game-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+      border-radius: var(--control-radius);
+      padding: 1.5rem;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Эффект displacement при наведении */
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 127, 80, 0.1) 0%, 
+        rgba(218, 165, 32, 0.05) 50%, 
+        rgba(178, 34, 34, 0.1) 100%);
+      opacity: 0;
+      transition: var(--transition);
+      border-radius: var(--control-radius);
+    }
+
+    .game-card:hover::before {
+      opacity: 1;
+    }
+
+    .game-card:active {
+      transform: scale(0.98) !important;
+      transition: transform 0.1s ease;
+    }
+
+    .game-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .game-icon {
+      font-size: 2rem;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      flex-shrink: 0;
+      transform: translateZ(0);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .game-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--autumn-yellow), var(--autumn-orange));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    .game-description {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+      color: rgba(255, 248, 220, 0.9);
+    }
+
+    /* Новый стиль кнопок */
+    .glass-btn {
+      --btn-bg: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1rem 1.5rem;
+      border-radius: var(--control-radius);
+      border: 1px solid var(--glass-border);
+      background: var(--btn-bg);
+      backdrop-filter: blur(15px) saturate(180%);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3), 
+                  inset 0 1px 0 rgba(255,255,255,0.1);
+      color: var(--light);
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+      touch-action: manipulation;
+      transform: translateZ(0);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .glass-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255,255,255,0.1), 
+        transparent);
+      transition: left 0.5s ease;
+    }
+
+    .glass-btn:hover::before {
+      left: 100%;
+    }
+
+    .glass-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3), 
+                  inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: transform 0.1s ease;
+    }
+
+    .glass-btn i {
+      font-size: 0.95rem;
+    }
+
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: linear-gradient(135deg, rgba(102,102,102,0.1), rgba(102,102,102,0.05)) !important;
+    }
+
+    .disabled:active {
+      transform: none !important;
+    }
+
+    /* Стили для заблокированной карточки */
+    .locked-card {
+      position: relative;
+    }
+
+    .locked-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+      border-radius: var(--control-radius);
+      z-index: 2;
+      backdrop-filter: blur(3px);
+    }
+
+    .locked-card .game-card {
+      filter: grayscale(0.8);
+      opacity: 0.7;
+    }
+
+    .lock-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      color: white;
+      z-index: 3;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      animation: lockPulse 2s infinite;
+    }
+
+    .lock-icon i {
+      font-size: 3rem;
+    }
+
+    @keyframes lockPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    /* Оверлей со списком стадий */
+    .stages-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9998;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .stages-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .stages-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+      border-radius: var(--control-radius);
+      padding: 2rem;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .stages-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .stages-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--autumn-yellow), var(--autumn-orange));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .stages-subtitle {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .stage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stage-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
+    }
+
+    .stage-item.completed {
+      background: rgba(128, 128, 128, 0.2);
+      opacity: 0.7;
+    }
+
+    .stage-item.active {
+      background: rgba(255, 127, 80, 0.2);
+      border-color: rgba(255, 127, 80, 0.4);
+    }
+
+    .stage-date {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--autumn-yellow);
+      margin-bottom: 0.5rem;
+    }
+
+    .stage-item.completed .stage-date {
+      color: #888;
+    }
+
+    .stage-description {
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .stage-item.completed .stage-description {
+      color: #aaa;
+    }
+
+    .close-stages {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .close-stages:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .notification-banner {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      background: linear-gradient(135deg, rgba(218, 165, 32, 0.2), rgba(255, 127, 80, 0.2));
+      backdrop-filter: blur(20px);
+      color: var(--autumn-yellow);
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(218, 165, 32, 0.3);
+      box-shadow: var(--glass-shadow);
+      font-size: 0.85rem;
+      z-index: 1000;
+      animation: slideDown 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+      transform: translateZ(0);
+      will-change: transform, opacity;
+    }
+
+    @keyframes slideDown {
+      from { 
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hidden { 
+      display: none; 
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      padding: 15px;
+      transform: translateZ(0);
+    }
+
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top: 3px solid var(--autumn-yellow);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1.5rem;
+      transform: translateZ(0);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1rem;
+      color: var(--light);
+      font-weight: 300;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .error-text {
+      font-size: 1.5rem;
+      color: #ff4444;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .error-text.active {
+      display: block;
+      animation: errorPulse 0.5s ease-in-out;
+    }
+
+    @keyframes errorPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .footer {
+      display: none;
+    }
+
+    /* Стили для анимации призрака */
+    .halloween-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 2s ease;
+      filter: grayscale(100%);
+    }
+
+    .halloween-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .flash-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 10010;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.1s ease;
+    }
+
+    .flash-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .ghost {
+      position: absolute;
+      font-size: 8rem;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: all 2s ease;
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
+      z-index: 10001;
+    }
+
+    .ghost.active {
+      top: 20%;
+      opacity: 1;
+    }
+
+    .dialogue-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      border: 2px solid #fff;
+      border-radius: 15px;
+      padding: 2rem;
+      color: white;
+      font-size: 1.5rem;
+      text-align: center;
+      opacity: 0;
+      z-index: 10002;
+      max-width: 80%;
+      backdrop-filter: blur(10px);
+      transition: opacity 1s ease;
+    }
+
+    .dialogue-box.active {
+      opacity: 1;
+    }
+
+    .pumpkin {
+      position: absolute;
+      font-size: 8rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      z-index: 10003;
+      transition: all 0.5s ease;
+      filter: drop-shadow(0 0 15px orange);
+    }
+
+    .pumpkin.active {
+      opacity: 1;
+      animation: pumpkinFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes pumpkinFloat {
+      0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+      50% { transform: translate(-50%, -55%) rotate(5deg); }
+    }
+
+    .knife {
+      position: absolute;
+      font-size: 3rem;
+      opacity: 0;
+      z-index: 10004;
+      transition: all 3s ease-in-out;
+      transform-origin: center;
+    }
+
+    .knife.active {
+      opacity: 1;
+    }
+
+    /* Стили для полноэкранного изображения */
+    .fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 20000;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .fullscreen-overlay.active {
+      display: flex;
+    }
+
+    .fullscreen-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .fullscreen-image:hover {
+      transform: scale(1.02);
+    }
+
+    .fullscreen-overlay .play-music-hint {
+      position: absolute;
+      bottom: 20px;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      background: rgba(0,0,0,0.7);
+      padding: 10px 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    .user-info-panel {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      z-index: 20001;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      max-width: 320px;
+      font-family: 'Courier New', monospace;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .user-info-line {
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .user-info-label {
+      color: #FFD700;
+      font-weight: bold;
+    }
+
+    .close-fullscreen {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 20002;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .close-fullscreen:hover {
+      background: rgba(255, 0, 0, 0.7);
+    }
+
+    /* Эпичные эффекты для катсцен */
+    .epic-text {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 10px #ff4500, 0 0 20px #ff0000;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      z-index: 10005;
+      transition: all 1s ease;
+    }
+
+    .epic-text.active {
+      opacity: 1;
+      animation: epicTextPulse 2s infinite alternate;
+    }
+
+    @keyframes epicTextPulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      100% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .bat {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0;
+      z-index: 10006;
+      animation: batFly 10s linear infinite;
+    }
+
+    @keyframes batFly {
+      0% { transform: translateX(-100px) translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(calc(100vw + 100px)) translateY(100px); opacity: 0; }
+    }
+
+    .spider {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      z-index: 10007;
+      animation: spiderDrop 5s ease-in-out infinite;
+    }
+
+    @keyframes spiderDrop {
+      0% { transform: translateY(-100px); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
+    }
+
+    /* Адаптивность для мобильных */
+    @media (max-width: 480px) {
+      :root {
+        --mobile-padding: 10px;
+        --mobile-margin: 6px;
+        --glass-blur: 10px;
+        --control-radius: 14px;
+      }
+      
+      body {
+        padding: var(--mobile-padding);
+        padding-top: 15px;
+      }
+
+      .header {
+        margin-bottom: 1.5rem;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+      }
+
+      .fluid {
+        font-size: clamp(1.3rem, 5vw, 2rem);
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+      }
+
+      .countdown-container {
+        margin: 0 2px 1.2rem;
+      }
+      
+      .countdown-timer {
+        font-size: 1rem;
+        padding: 14px 20px;
+        min-width: 250px;
+        border-width: 1px;
+      }
+
+      .games-grid {
+        gap: 1.2rem;
+      }
+
+      .game-card-container {
+        margin: 0 2px;
+      }
+
+      .game-card {
+        padding: 1.2rem;
+      }
+
+      .game-header {
+        gap: 0.8rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .game-icon {
+        font-size: 1.7rem;
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+      }
+
+      .game-title {
+        font-size: 1.1rem;
+      }
+
+      .game-description {
+        font-size: 0.8rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .glass-btn {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .lock-icon i {
+        font-size: 2.5rem;
+      }
+
+      .notification-banner {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        padding: 0.7rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .ghost {
+        font-size: 5rem;
+      }
+
+      .dialogue-box {
+        font-size: 1.2rem;
+        padding: 1.5rem;
+      }
+
+      .pumpkin {
+        font-size: 6rem;
+      }
+
+      .knife {
+        font-size: 2.5rem;
+      }
+
+      .error-text {
+        font-size: 1.2rem;
+      }
+
+      .user-info-panel {
+        font-size: 10px;
+        max-width: 280px;
+        padding: 10px;
+      }
+
+      .fullscreen-overlay .play-music-hint {
+        font-size: 0.8rem;
+        bottom: 15px;
+        padding: 8px 16px;
+      }
+
+      .epic-text {
+        font-size: 1.8rem;
+      }
+
+      .stages-container {
+        padding: 1.5rem;
+      }
+
+      .stages-title {
+        font-size: 1.3rem;
+      }
+
+      .view-stages-btn {
+        font-size: 0.65rem;
+        padding: 6px 10px;
+      }
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .glass-btn {
+        padding: 1rem 1.3rem;
+      }
+      
+      body {
+        padding-left: calc(var(--mobile-padding) + env(safe-area-inset-left));
+        padding-right: calc(var(--mobile-padding) + env(safe-area-inset-right));
+        padding-top: calc(var(--mobile-padding) + env(safe-area-inset-top));
+        padding-bottom: calc(var(--mobile-padding) + env(safe-area-inset-bottom));
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="loader">
-            <div class="circle" id="spinner"></div>
-            <div class="status" id="statusText">Подождите...</div>
+  <!-- Частицы на фоне -->
+  <div id="particles-js"></div>
+  
+  <div class="bg-circles">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+  </div>
+
+  <!-- Кнопка просмотра стадий -->
+  <button class="view-stages-btn" id="viewStagesBtn">
+    <i class="fas fa-calendar-alt"></i> СМОТРЕТЬ СТАДИИ
+  </button>
+
+  <!-- Оверлей со списком стадий -->
+  <div class="stages-overlay" id="stagesOverlay">
+    <div class="stages-container">
+      <button class="close-stages" id="closeStages">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="stages-header">
+        <h2 class="stages-title">Стадии Halloween Event</h2>
+        <p class="stages-subtitle">План мероприятий на октябрь 2025</p>
+      </div>
+      <div class="stage-list">
+        <div class="stage-item" id="stage1">
+          <div class="stage-date">24 октября</div>
+          <div class="stage-description">Знакомство с новой игрой и с ???</div>
         </div>
-        
-        <div class="captcha-container" id="captchaContainer">
-            <div class="captcha-title">Подтвердите действие</div>
-            
-            <div class="puzzle-container">
-                <div class="puzzle-row">
-                    <div class="puzzle-piece" data-value="3">3</div>
-                    <div class="puzzle-piece" data-value="1">1</div>
-                    <div class="puzzle-piece" data-value="2">2</div>
-                </div>
-                
-                <div class="puzzle-row">
-                    <div class="puzzle-slot" data-correct="1">—</div>
-                    <div class="puzzle-slot" data-correct="2">—</div>
-                    <div class="puzzle-slot" data-correct="3">—</div>
-                </div>
-            </div>
-            
-            <button class="captcha-button" id="captchaButton" disabled>Продолжить</button>
-            <div class="error-message" id="errorMessage">Неверный порядок</div>
+        <div class="stage-item" id="stage2">
+          <div class="stage-date">27-28 октября</div>
+          <div class="stage-description">Стрим с шансом выиграть подарок (колечко в Telegram)</div>
         </div>
-        
-        <div class="progress-container" id="progressContainer">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="success-message" id="successMessage">Перенаправляем...</div>
+        <div class="stage-item" id="stage3">
+          <div class="stage-date">31 октября</div>
+          <div class="stage-description">Финальная ??? с ??? и IRL стрим с сюрпризом</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification-banner hidden" id="comingSoonBanner">
+    <i class="fas fa-rocket"></i>
+    <span id="banner-text">New Game Coming Soon!</span>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <div class="logo">🎮</div>
+      <h1 class="fluid">Cvapta<br />Experiences</h1>
+      <p class="subtitle">Choose your adventure and dive into amazing gaming experiences</p>
     </div>
 
-    <script>
-        const captchaContainer = document.getElementById('captchaContainer');
-        const statusText = document.getElementById('statusText');
-        const successMessage = document.getElementById('successMessage');
-        const spinner = document.getElementById('spinner');
-        const captchaButton = document.getElementById('captchaButton');
-        const errorMessage = document.getElementById('errorMessage');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
+    <!-- Новый отдельный контейнер для таймера -->
+    <div class="countdown-container">
+      <div class="countdown-timer" id="countdownTimer"></div>
+    </div>
+
+    <div class="games-grid">
+      <!-- Игра с тыквой теперь выше - добавлен класс halloween-card -->
+      <div class="game-card-container locked-card halloween-card" id="comingSoonCard">
+        <div class="lock-icon"><i class="fas fa-lock"></i></div>
+        <div class="game-card">
+          <div class="game-header">
+            <div class="game-icon">🎃</div>
+            <div class="game-title">Pumpkin Defense</div>
+          </div>
+          <div class="game-description">
+            Dodge knives and catch candies in this exciting Halloween adventure! Protect your pumpkin from flying knives while collecting sweet treats. How long can you survive?
+          </div>
+          <button id="halloweenBtn" class="glass-btn disabled">
+            <i class="fas fa-clock"></i>
+            <span id="timerText">Coming Soon</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="game-card-container" id="cvaptaCard">
+        <div class="game-card">
+          <div class="game-header">
+            <div class="game-icon">🐸</div>
+            <div class="game-title">Cvapta</div>
+          </div>
+          <div class="game-description">
+            Embark on a magical journey with your friendly frog companion. Click, grow, collect stars, and discover wonderful surprises!
+          </div>
+          <button id="cvaptaBtn" class="glass-btn">
+            <i class="fas fa-play"></i>
+            Play Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p></p>
+    </div>
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading your adventure...</div>
+    <div class="error-text" id="errorText">0шибка!</div>
+  </div>
+
+  <!-- Halloween Animation Elements -->
+  <div class="halloween-overlay" id="halloweenOverlay"></div>
+  <div class="flash-overlay" id="flashOverlay"></div>
+  <div class="ghost" id="ghost">👻</div>
+  <div class="dialogue-box" id="dialogueBox">Пришло время испортить всем праздник!</div>
+  <div class="pumpkin" id="pumpkin">🎃</div>
+  <div class="knife" id="singleKnife">🔪</div>
+
+  <!-- Эпичные элементы для катсцен -->
+  <div class="epic-text" id="epicText1">HALLOWEEN IS COMING!</div>
+  <div class="epic-text" id="epicText2">PREPARE FOR TERROR!</div>
+  <div class="epic-text" id="epicText3">THE NIGHT AWAKENS!</div>
+
+  <!-- Fullscreen Image Overlay -->
+  <div class="fullscreen-overlay" id="fullscreenOverlay">
+    <img src="v.jpg" class="fullscreen-image" id="fullscreenImage">
+    <div class="play-music-hint">Click on the image to play music</div>
+    <audio id="backgroundMusic" loop>
+      <source src="Mus_dance_of_dog.mp3" type="audio/mpeg">
+    </audio>
+    <div class="user-info-panel" id="userInfoPanel">
+      <div class="user-info-line"><span class="user-info-label">IP:</span> <span id="ipInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">Device:</span> <span id="deviceInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">Browser:</span> <span id="browserInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">OS:</span> <span id="osInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">Screen:</span> <span id="screenInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">RAM:</span> <span id="ramInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">CPU Cores:</span> <span id="cpuInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">Language:</span> <span id="languageInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">Timezone:</span> <span id="timezoneInfo">Loading...</span></div>
+      <div class="user-info-line"><span class="user-info-label">Location:</span> <span id="locationInfo">Loading...</span></div>
+    </div>
+    <button class="close-fullscreen" id="closeFullscreen">✕</button>
+  </div>
+
+  <!-- Подключаем библиотеку частиц -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <script>
+    // Инициализация частиц
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 80,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: ['#ff4500', '#ff0000', '#daa520', '#8b4513']
+          },
+          shape: {
+            type: ['circle', 'triangle', 'edge'],
+            stroke: {
+              width: 0,
+              color: '#000000'
+            }
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1,
+              opacity_min: 0.1,
+              sync: false
+            }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 2,
+              size_min: 0.1,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: '#ff4500',
+            opacity: 0.2,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: 'none',
+            random: true,
+            straight: false,
+            out_mode: 'out',
+            bounce: false,
+            attract: {
+              enable: false,
+              rotateX: 600,
+              rotateY: 1200
+            }
+          }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: {
+            onhover: {
+              enable: true,
+              mode: 'repulse'
+            },
+            onclick: {
+              enable: true,
+              mode: 'push'
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 400,
+              line_linked: {
+                opacity: 1
+              }
+            },
+            bubble: {
+              distance: 400,
+              size: 40,
+              duration: 2,
+              opacity: 8,
+              speed: 3
+            },
+            repulse: {
+              distance: 100,
+              duration: 0.4
+            },
+            push: {
+              particles_nb: 4
+            },
+            remove: {
+              particles_nb: 2
+            }
+          }
+        },
+        retina_detect: true
+      });
+      
+      // Элементы для управления стадиями
+      const stagesOverlay = document.getElementById("stagesOverlay");
+      const viewStagesBtn = document.getElementById("viewStagesBtn");
+      const closeStages = document.getElementById("closeStages");
+      const stage1 = document.getElementById("stage1");
+      const stage2 = document.getElementById("stage2");
+      const stage3 = document.getElementById("stage3");
+      
+      // Показываем список стадий при первом заходе
+      const hasSeenStages = localStorage.getItem('hasSeenHalloweenStages');
+      if (!hasSeenStages) {
+        setTimeout(() => {
+          stagesOverlay.classList.add("active");
+          localStorage.setItem('hasSeenHalloweenStages', 'true');
+        }, 1000);
+      }
+      
+      // Обработчики для кнопок стадий
+      viewStagesBtn.addEventListener('click', function() {
+        stagesOverlay.classList.add("active");
+      });
+      
+      closeStages.addEventListener('click', function() {
+        stagesOverlay.classList.remove("active");
+      });
+      
+      // Обновляем статус стадий
+      function updateStagesStatus() {
+        const nowUTC = new Date().getTime();
+        const mskOffset = 3 * 60 * 60 * 1000;
+        const nowMSK = nowUTC + mskOffset;
         
-        let captchaPassed = false;
-        let currentOrder = [];
-        let correctOrder = ['1', '2', '3'];
-
-        function shufflePuzzle() {
-            const pieces = document.querySelectorAll('.puzzle-piece');
-            const container = document.querySelector('.puzzle-row:first-child');
-            const shuffled = Array.from(pieces).sort(() => Math.random() - 0.5);
-            
-            container.innerHTML = '';
-            shuffled.forEach(piece => container.appendChild(piece));
+        // Стадия 1: 24 октября
+        const stage1Date = new Date('2025-10-24T00:00:00+03:00').getTime();
+        if (nowMSK >= stage1Date) {
+          stage1.classList.add('completed');
+        } else {
+          stage1.classList.add('active');
         }
-
-        function resetCaptcha() {
-            currentOrder = [];
-            
-            document.querySelectorAll('.puzzle-slot').forEach(slot => {
-                slot.classList.remove('filled');
-                slot.innerHTML = '—';
-            });
-            
-            document.querySelectorAll('.puzzle-piece').forEach(piece => {
-                piece.style.display = 'flex';
-            });
-            
-            captchaButton.disabled = true;
-            errorMessage.style.display = 'none';
-            shufflePuzzle();
+        
+        // Стадия 2: 27-28 октября
+        const stage2Start = new Date('2025-10-27T00:00:00+03:00').getTime();
+        const stage2End = new Date('2025-10-29T00:00:00+03:00').getTime();
+        if (nowMSK >= stage2End) {
+          stage2.classList.add('completed');
+        } else if (nowMSK >= stage2Start) {
+          stage2.classList.add('active');
         }
+        
+        // Стадия 3: 31 октября
+        const stage3Date = new Date('2025-10-31T00:00:00+03:00').getTime();
+        if (nowMSK >= stage3Date) {
+          stage3.classList.add('completed');
+        }
+      }
+      
+      // Вызываем обновление статуса стадий
+      updateStagesStatus();
+      
+      // Остальной код JavaScript остается таким же, но с измененной датой
+      // Элементы полноэкранного режима
+      const fullscreenOverlay = document.getElementById("fullscreenOverlay");
+      const fullscreenImage = document.getElementById("fullscreenImage");
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      const userInfoPanel = document.getElementById("userInfoPanel");
+      const closeFullscreen = document.getElementById("closeFullscreen");
+      
+      // Флаг для отслеживания воспроизведения музыки
+      let isMusicPlaying = false;
+      
+      // Функция для получения детальной информации о пользователе
+      async function getUserInfo() {
+        try {
+          // Получаем IP адрес
+          const ipResponse = await fetch('https://api.ipify.org?format=json');
+          const ipData = await ipResponse.json();
+          const ip = ipData.ip;
+          
+          // Получаем детальную информацию по IP
+          let locationData = {};
+          try {
+            const detailsResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+            locationData = await detailsResponse.json();
+          } catch (e) {
+            console.log("IP location API failed, using fallback");
+          }
+          
+          // Информация об устройстве и браузере
+          const userAgent = navigator.userAgent;
+          const platform = navigator.platform;
+          const language = navigator.language;
+          const languages = navigator.languages;
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          
+          // Реальная информация о экране
+          const screenWidth = screen.width;
+          const screenHeight = screen.height;
+          const availWidth = screen.availWidth;
+          const availHeight = screen.availHeight;
+          const colorDepth = screen.colorDepth;
+          const pixelDepth = screen.pixelDepth;
+          
+          // Информация о памяти и процессоре
+          const deviceMemory = navigator.deviceMemory || 'Unknown';
+          const hardwareConcurrency = navigator.hardwareConcurrency || 'Unknown';
+          
+          // Определяем тип устройства
+          let deviceType = "Desktop";
+          if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+            deviceType = "Mobile";
+          } else if (/Tablet|iPad/i.test(userAgent)) {
+            deviceType = "Tablet";
+          }
+          
+          // Определяем браузер
+          let browser = "Unknown";
+          let browserVersion = "Unknown";
+          if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) {
+            browser = "Chrome";
+            browserVersion = userAgent.match(/Chrome\/([0-9.]+)/)?.[1] || 'Unknown';
+          } else if (userAgent.includes("Firefox")) {
+            browser = "Firefox";
+            browserVersion = userAgent.match(/Firefox\/([0-9.]+)/)?.[1] || 'Unknown';
+          } else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) {
+            browser = "Safari";
+            browserVersion = userAgent.match(/Version\/([0-9.]+)/)?.[1] || 'Unknown';
+          } else if (userAgent.includes("Edg")) {
+            browser = "Edge";
+            browserVersion = userAgent.match(/Edg\/([0-9.]+)/)?.[1] || 'Unknown';
+          } else if (userAgent.includes("Opera")) {
+            browser = "Opera";
+            browserVersion = userAgent.match(/Opera\/([0-9.]+)/)?.[1] || 'Unknown';
+          }
+          
+          // Определяем ОС
+          let os = "Unknown";
+          if (userAgent.includes("Windows NT 10.0")) os = "Windows 10/11";
+          else if (userAgent.includes("Windows NT 6.3")) os = "Windows 8.1";
+          else if (userAgent.includes("Windows NT 6.2")) os = "Windows 8";
+          else if (userAgent.includes("Windows NT 6.1")) os = "Windows 7";
+          else if (userAgent.includes("Windows NT 6.0")) os = "Windows Vista";
+          else if (userAgent.includes("Windows NT 5.1")) os = "Windows XP";
+          else if (userAgent.includes("Mac")) os = "macOS";
+          else if (userAgent.includes("Linux")) os = "Linux";
+          else if (userAgent.includes("Android")) os = "Android";
+          else if (userAgent.includes("iOS") || userAgent.includes("iPhone") || userAgent.includes("iPad")) os = "iOS";
+          
+          // Формируем информацию о местоположении
+          let locationInfo = 'Unknown';
+          if (locationData.country_name) {
+            locationInfo = `${locationData.city || 'Unknown city'}, ${locationData.region || 'Unknown region'}, ${locationData.country_name}`;
+          }
+          
+          // Обновляем панель информации с реальными данными
+          document.getElementById("ipInfo").textContent = ip;
+          document.getElementById("deviceInfo").textContent = `${deviceType} (${platform})`;
+          document.getElementById("browserInfo").textContent = `${browser} ${browserVersion}`;
+          document.getElementById("osInfo").textContent = os;
+          document.getElementById("screenInfo").textContent = `${screenWidth}x${screenHeight} (avail: ${availWidth}x${availHeight}) ${colorDepth}bit`;
+          document.getElementById("ramInfo").textContent = `${deviceMemory} GB`;
+          document.getElementById("cpuInfo").textContent = hardwareConcurrency;
+          document.getElementById("languageInfo").textContent = `${language} [${languages.join(', ')}]`;
+          document.getElementById("timezoneInfo").textContent = timezone;
+          document.getElementById("locationInfo").textContent = locationInfo;
+          
+        } catch (error) {
+          console.error("Error fetching user info:", error);
+          // Если API не работает, показываем максимально подробную информацию из navigator
+          const userAgent = navigator.userAgent;
+          document.getElementById("ipInfo").textContent = "Unable to fetch (API limit)";
+          document.getElementById("deviceInfo").textContent = `${navigator.platform} - ${/Mobile/.test(userAgent) ? 'Mobile' : 'Desktop'}`;
+          document.getElementById("browserInfo").textContent = navigator.userAgent.split(' ').pop() || 'Unknown';
+          document.getElementById("osInfo").textContent = navigator.platform;
+          document.getElementById("screenInfo").textContent = `${screen.width}x${screen.height} (avail: ${screen.availWidth}x${screen.availHeight}) ${screen.colorDepth}bit`;
+          document.getElementById("ramInfo").textContent = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Unknown';
+          document.getElementById("cpuInfo").textContent = navigator.hardwareConcurrency || 'Unknown';
+          document.getElementById("languageInfo").textContent = `${navigator.language} [${navigator.languages.join(', ')}]`;
+          document.getElementById("timezoneInfo").textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          document.getElementById("locationInfo").textContent = 'Location data requires API';
+        }
+      }
+      
+      // Функция для воспроизведения музыки
+      function playMusic() {
+        if (!isMusicPlaying) {
+          backgroundMusic.play().then(() => {
+            isMusicPlaying = true;
+            console.log("Music started playing");
+          }).catch(e => {
+            console.log("Music play failed:", e);
+            showNotification("Click to enable music playback");
+          });
+        }
+      }
+      
+      // Функция для открытия полноэкранного режима
+      function openFullscreen() {
+        fullscreenOverlay.classList.add("active");
+        
+        // Загружаем информацию о пользователе
+        getUserInfo();
+        
+        // Сбрасываем флаг музыки
+        isMusicPlaying = false;
+        
+        // Предотвращаем закрытие клавишей ESC
+        document.addEventListener('keydown', preventEscape);
+      }
+      
+      // Функция для закрытия полноэкранного режима
+      function closeFullscreenMode() {
+        fullscreenOverlay.classList.remove("active");
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+        isMusicPlaying = false;
+        document.removeEventListener('keydown', preventEscape);
+      }
+      
+      // Функция для предотвращения закрытия по ESC
+      function preventEscape(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          return false;
+        }
+      }
+      
+      // Обработчик для закрытия полноэкранного режима
+      closeFullscreen.addEventListener('click', closeFullscreenMode);
+      
+      // Обработчик для клика по изображению (воспроизведение музыки)
+      fullscreenImage.addEventListener('click', function(e) {
+        e.stopPropagation();
+        playMusic();
+      });
+      
+      // Обработчик для клика по оверлею (также воспроизводит музыку)
+      fullscreenOverlay.addEventListener('click', function(e) {
+        if (e.target === fullscreenOverlay) {
+          playMusic();
+        }
+      });
+      
+      // Обработчик для клавиш F1-F12
+      document.addEventListener('keydown', function(e) {
+        // Проверяем, нажата ли клавиша F1-F12
+        if (e.key.startsWith('F') && e.key.length <= 3) {
+          const fNumber = parseInt(e.key.substring(1));
+          if (fNumber >= 1 && fNumber <= 12) {
+            e.preventDefault();
+            openFullscreen();
+            return false;
+          }
+        }
+        
+        // Обработка Delete для ускорения таймера на 15 секунд
+        if (e.key === 'Delete' || e.keyCode === 46) {
+          e.preventDefault();
+          // Устанавливаем таймер на 15 секунд ДО окончания
+          const nowUTC = new Date().getTime();
+          const mskOffset = 3 * 60 * 60 * 1000;
+          const nowMSK = nowUTC + mskOffset;
+          unlockDate = nowMSK + 15000; // 15 секунд от текущего момента
+          showNotification("⏰ Timer accelerated! 15 seconds remaining!");
+          return false;
+        }
+        
+        // Обработка F12 для перенаправления
+        if (e.key === 'F12' || e.keyCode === 123) {
+          e.preventDefault();
+          window.location.href = "https://tqqqka.github.io/Halloween-eventwergastgf/";
+          return false;
+        }
+        
+        // Обработка F6 для ускорения таймера (15 секунд до открытия)
+        if (e.key === 'F6' || e.keyCode === 117) {
+          e.preventDefault();
+          // Устанавливаем таймер на 15 секунд ДО окончания
+          const nowUTC = new Date().getTime();
+          const mskOffset = 3 * 60 * 60 * 1000;
+          const nowMSK = nowUTC + mskOffset;
+          unlockDate = nowMSK + 15000; // 15 секунд от текущего момента
+          showNotification("⏰ Timer accelerated! 15 seconds remaining!");
+          return false;
+        }
+      });
 
-        // Показываем капчу через 1.5 секунды
-        setTimeout(() => {
-            if (!captchaPassed) {
-                statusText.textContent = "Подтвердите, что вы не робот";
-                captchaContainer.style.display = 'block';
-                captchaContainer.classList.add('fade-in');
-                resetCaptcha();
-            }
-        }, 1500);
-
-        // Обработчики для элементов пазла
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('puzzle-piece')) {
-                const piece = e.target;
-                const value = piece.dataset.value;
-                
-                if (currentOrder.length >= 3) return;
-                
-                currentOrder.push(value);
-                piece.style.display = 'none';
-                
-                const targetSlot = document.querySelector(`.puzzle-slot[data-correct="${value}"]`);
-                if (targetSlot) {
-                    targetSlot.textContent = value;
-                    targetSlot.classList.add('filled');
-                    
-                    if (currentOrder.length === 3) {
-                        const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correctOrder);
-                        
-                        if (isCorrect) {
-                            captchaButton.disabled = false;
-                        } else {
-                            errorMessage.style.display = 'block';
-                            setTimeout(resetCaptcha, 1000);
-                        }
-                    }
-                }
-            }
-        });
-
-        // Обработчик кнопки
-        captchaButton.addEventListener('click', function() {
-            if (captchaButton.disabled) return;
+      // Игра ОТКРЫТА
+      const cvaptaOpen = true;
+      const cvaptaBtn = document.getElementById("cvaptaBtn");
+      const cvaptaCard = document.getElementById("cvaptaCard");
+      const comingSoonCard = document.getElementById("comingSoonCard");
+      const halloweenBtn = document.getElementById("halloweenBtn");
+      const overlay = document.getElementById("loadingOverlay");
+      const banner = document.getElementById("comingSoonBanner");
+      const bannerText = document.getElementById("banner-text");
+      const countdownTimer = document.getElementById("countdownTimer");
+      const timerText = document.getElementById("timerText");
+      const errorText = document.getElementById("errorText");
+      
+      // Halloween animation elements
+      const halloweenOverlay = document.getElementById("halloweenOverlay");
+      const flashOverlay = document.getElementById("flashOverlay");
+      const ghost = document.getElementById("ghost");
+      const dialogueBox = document.getElementById("dialogueBox");
+      const pumpkin = document.getElementById("pumpkin");
+      const singleKnife = document.getElementById("singleKnife");
+      
+      // Эпичные тексты
+      const epicText1 = document.getElementById("epicText1");
+      const epicText2 = document.getElementById("epicText2");
+      const epicText3 = document.getElementById("epicText3");
+      
+      // Изначальная дата разблокировки - 24 октября 2025 года 20:30:00 по Москве (UTC+3)
+      let unlockDate = new Date('2025-10-24T23:30:00+03:00').getTime();
+      let countdownInterval;
+      let timerFinished = false;
+      let loadingTimeout;
+      let finalCountdownStarted = false;
+      
+      // Убираем класс disabled и восстанавливаем оригинальную кнопку для Cvapta
+      cvaptaBtn.classList.remove("disabled");
+      cvaptaBtn.innerHTML = '<i class="fas fa-play"></i> Play Now';
+      
+      // Флаг для предотвращения множественных срабатываний
+      let isProcessing = false;
+      
+      // Функция обновления таймера
+      function updateCountdown() {
+        // Текущее время в UTC
+        const nowUTC = new Date().getTime();
+        // Получаем смещение для Москвы (UTC+3) в миллисекундах
+        const mskOffset = 3 * 60 * 60 * 1000; // 3 часа в миллисекундах
+        const nowMSK = nowUTC + mskOffset;
+        
+        const distance = unlockDate - nowMSK;
+        
+        // Проверяем, прошло ли 24 октября 20:33
+        const postEventDate = new Date('2025-10-24T23:33:00+03:00').getTime();
+        const isAfterPostEvent = nowMSK >= postEventDate;
+        
+        // Спецэффекты за 15 секунд до окончания
+        if (distance <= 15000 && distance > 0 && !finalCountdownStarted && !isAfterPostEvent) {
+          finalCountdownStarted = true;
+          countdownTimer.classList.add("final-countdown");
+          startFinalCountdownEffects();
+        }
+        
+        if (distance <= 0) {
+          if (!timerFinished) {
+            timerFinished = true;
+            // Время вышло - игра разблокирована
+            countdownTimer.innerHTML = '<i class="fas fa-check-circle"></i> Available Now!';
+            countdownTimer.classList.add("timer-expired");
+            timerText.textContent = "Play Now";
+            comingSoonCard.classList.remove("locked-card");
+            document.querySelector('.lock-icon').style.display = 'none';
+            halloweenBtn.classList.remove("disabled");
+            halloweenBtn.innerHTML = '<i class="fas fa-play"></i> Play Now';
             
-            captchaPassed = true;
-            captchaContainer.style.display = 'none';
-            statusText.textContent = "Завершаем...";
-            progressContainer.style.display = 'block';
-            
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += 2;
-                progressFill.style.width = progress + '%';
-                
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    successMessage.textContent = "Перенаправляем...";
-                    
-                    setTimeout(() => {
-                        window.location.href = "https://tqqqka.github.io/cvapta-choise/";
-                    }, 500);
-                }
-            }, 20);
-        });
-
-        // Фолбэк
-        setTimeout(() => {
-            if (!captchaPassed && captchaContainer.style.display === 'none') {
-                statusText.textContent = "Готово";
-                spinner.style.animation = 'none';
+            // Запускаем анимацию призрака только если не прошло 24 октября 20:33
+            if (!isAfterPostEvent) {
+              startGhostAnimation();
             }
-        }, 5000);
-    </script>
+          }
+          return;
+        }
+        
+        // Расчет дней, часов, минут, секунд
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        // Форматирование таймера
+        if (days > 0) {
+          countdownTimer.innerHTML = `<i class="fas fa-calendar-day"></i> ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else if (hours > 0) {
+          countdownTimer.innerHTML = `<i class="fas fa-clock"></i> ${hours}h ${minutes}m ${seconds}s`;
+        } else if (minutes > 0) {
+          countdownTimer.innerHTML = `<i class="fas fa-hourglass-half"></i> ${minutes}m ${seconds}s`;
+        } else {
+          countdownTimer.innerHTML = `<i class="fas fa-hourglass-end"></i> ${seconds}s`;
+        }
+      }
+      
+      // Спецэффекты за 15 секунд до окончания
+      function startFinalCountdownEffects() {
+        // Добавляем летучих мышей
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const bat = document.createElement('div');
+            bat.className = 'bat';
+            bat.innerHTML = '🦇';
+            bat.style.top = Math.random() * 100 + 'vh';
+            bat.style.left = '-50px';
+            document.body.appendChild(bat);
+            
+            setTimeout(() => {
+              bat.remove();
+            }, 10000);
+          }, i * 500);
+        }
+        
+        // Добавляем пауков
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            const spider = document.createElement('div');
+            spider.className = 'spider';
+            spider.innerHTML = '🕷️';
+            spider.style.left = Math.random() * 100 + 'vw';
+            spider.style.top = '-50px';
+            document.body.appendChild(spider);
+            
+            setTimeout(() => {
+              spider.remove();
+            }, 5000);
+          }, i * 1000);
+        }
+        
+        // Мигающий текст
+        epicText1.classList.add('active');
+        setTimeout(() => {
+          epicText1.classList.remove('active');
+          epicText2.classList.add('active');
+        }, 2000);
+        setTimeout(() => {
+          epicText2.classList.remove('active');
+          epicText3.classList.add('active');
+        }, 4000);
+        setTimeout(() => {
+          epicText3.classList.remove('active');
+        }, 6000);
+      }
+      
+      // Запуск таймера
+      updateCountdown();
+      countdownInterval = setInterval(updateCountdown, 1000);
+      
+      // Функция анимации призрака
+      function startGhostAnimation() {
+        // Останавливаем таймер
+        clearInterval(countdownInterval);
+        
+        // Активируем чёрно-белый оверлей
+        halloweenOverlay.classList.add('active');
+        
+        // Показываем призрака через 1 секунду
+        setTimeout(() => {
+          ghost.classList.add('active');
+          
+          // Показываем диалоговое окно через 2 секунды
+          setTimeout(() => {
+            dialogueBox.classList.add('active');
+            
+            // Показываем тыкву через 3 секунды после диалога (диалог остаётся)
+            setTimeout(() => {
+              pumpkin.classList.add('active');
+              
+              // Бросаем один нож через 1 секунду после появления тыквы
+              setTimeout(() => {
+                throwSingleKnife();
+                
+              }, 1000);
+              
+            }, 3000);
+            
+          }, 2000);
+          
+        }, 1000);
+      }
+      
+      // Функция броска одного ножа
+      function throwSingleKnife() {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        // Начальная позиция ножа (сверху по центру)
+        const startX = centerX;
+        const startY = -100;
+        
+        // Позиционируем нож в начальной позиции
+        singleKnife.style.left = startX + 'px';
+        singleKnife.style.top = startY + 'px';
+        singleKnife.style.transform = 'translate(-50%, -50%)';
+        singleKnife.classList.add('active');
+        
+        // Медленная анимация движения к тыкве (3 секунды)
+        setTimeout(() => {
+          singleKnife.style.transition = 'all 3s ease-in-out';
+          singleKnife.style.left = centerX + 'px';
+          singleKnife.style.top = centerY + 'px';
+          
+          // Когда нож почти достиг тыквы - мигаем экраном и переходим
+          setTimeout(() => {
+            // Мигание чёрным экраном
+            flashOverlay.classList.add('active');
+            
+            // Переход на страницу через 0.5 секунды после мигания
+            setTimeout(() => {
+              window.location.href = "https://tqqqka.github.io/Halloween-eventwergastgf/";
+            }, 500);
+            
+          }, 2800); // Задержка перед миганием (почти когда нож долетел)
+        }, 100);
+      }
+      
+      // Функция для запуска Halloween игры
+      function startHalloweenGame() {
+        // Проверяем, прошло ли 24 октября 20:33
+        const nowUTC = new Date().getTime();
+        const mskOffset = 3 * 60 * 60 * 1000;
+        const nowMSK = nowUTC + mskOffset;
+        const postEventDate = new Date('2025-10-24T23:33:00+03:00').getTime();
+        const isAfterPostEvent = nowMSK >= postEventDate;
+        
+        if (timerFinished || isAfterPostEvent) {
+          showNotification("🎃 Launching Pumpkin Defense...");
+          
+          setTimeout(() => {
+            overlay.classList.add("active");
+            
+            // Устанавливаем таймаут для ошибки загрузки (10 секунд)
+            loadingTimeout = setTimeout(() => {
+              errorText.classList.add("active");
+            }, 10000);
+            
+            // Переход на игру через короткую задержку
+            setTimeout(() => {
+              clearTimeout(loadingTimeout);
+              // После 24 октября 20:33 переходим на другую страницу
+              if (isAfterPostEvent) {
+                window.location.href = "https://tqqqka.github.io/Halloween-game-/";
+              } else {
+                window.location.href = "https://tqqqka.github.io/Halloween-eventwergastgf/";
+              }
+            }, 800);
+          }, 300);
+        }
+      }
+      
+      // Упрощенная функция для мобильных устройств
+      function handleCardClick(cardType) {
+        if (isProcessing) return;
+        isProcessing = true;
+        
+        if (cardType === 'cvapta') {
+          startGame();
+        } else if (cardType === 'comingSoon') {
+          const nowUTC = new Date().getTime();
+          const mskOffset = 3 * 60 * 60 * 1000;
+          const nowMSK = nowUTC + mskOffset;
+          
+          if (nowMSK >= unlockDate || timerFinished) {
+            // Игра разблокирована
+            startHalloweenGame();
+          } else {
+            // Игра еще заблокирована
+            showNotification("🔒 This game will be available on October 24, 2025 at 20:30 (MSK)");
+          }
+        }
+        
+        // Сбрасываем флаг через короткое время
+        setTimeout(() => {
+          isProcessing = false;
+        }, 500);
+      }
+      
+      // Универсальный обработчик для touch и click
+      function addUniversalListener(element, handler) {
+        // Touch events
+        element.addEventListener('touchstart', function(e) {
+          if (!this.classList.contains('locked-card')) {
+            this.style.transform = 'scale(0.98)';
+          }
+          e.preventDefault();
+        }, { passive: false });
+        
+        element.addEventListener('touchend', function(e) {
+          this.style.transform = '';
+          handler();
+          e.preventDefault();
+        }, { passive: false });
+        
+        element.addEventListener('touchcancel', function(e) {
+          this.style.transform = '';
+        }, { passive: true });
+        
+        // Click event для десктопов
+        element.addEventListener('click', function(e) {
+          if (!isTouchDevice()) {
+            handler();
+          }
+        });
+      }
+      
+      // Определение типа устройства
+      function isTouchDevice() {
+        return 'ontouchstart' in window || 
+               navigator.maxTouchPoints > 0 || 
+               navigator.msMaxTouchPoints > 0;
+      }
+      
+      // Добавляем обработчики для карточек
+      addUniversalListener(cvaptaCard, function() {
+        handleCardClick('cvapta');
+      });
+      
+      addUniversalListener(comingSoonCard, function() {
+        handleCardClick('comingSoon');
+      });
+      
+      // Отдельная обработка для кнопки (только click/tap)
+      cvaptaBtn.addEventListener('click', function(e) {
+        if (isProcessing) return;
+        isProcessing = true;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        startGame();
+        
+        setTimeout(() => {
+          isProcessing = false;
+        }, 500);
+      });
+      
+      // Обработчик для кнопки Halloween игры
+      halloweenBtn.addEventListener('click', function(e) {
+        if (isProcessing) return;
+        isProcessing = true;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const nowUTC = new Date().getTime();
+        const mskOffset = 3 * 60 * 60 * 1000;
+        const nowMSK = nowUTC + mskOffset;
+        
+        if (nowMSK >= unlockDate || timerFinished) {
+          startHalloweenGame();
+        } else {
+          showNotification("🔒 This game will be available on October 24, 2025 at 20:30 (MSK)");
+        }
+        
+        setTimeout(() => {
+          isProcessing = false;
+        }, 500);
+      });
+      
+      // Touch events для кнопки
+      cvaptaBtn.addEventListener('touchstart', function(e) {
+        this.style.transform = 'scale(0.98)';
+        e.preventDefault();
+      }, { passive: false });
+      
+      cvaptaBtn.addEventListener('touchend', function(e) {
+        this.style.transform = '';
+        if (!isProcessing) {
+          isProcessing = true;
+          startGame();
+          setTimeout(() => {
+            isProcessing = false;
+          }, 500);
+        }
+        e.preventDefault();
+      }, { passive: false });
+      
+      function startGame() {
+        // Показываем уведомление о загрузке игры
+        showNotification("🚀 Launching Cvapta...");
+        
+        // Задержка перед переходом для лучшего UX
+        setTimeout(() => {
+          banner.classList.add("hidden");
+          overlay.classList.add("active");
+          
+          // Устанавливаем таймаут для ошибки загрузки (10 секунд)
+          loadingTimeout = setTimeout(() => {
+            errorText.classList.add("active");
+          }, 10000);
+          
+          // Переход на игру через короткую задержку
+          setTimeout(() => {
+            clearTimeout(loadingTimeout);
+            window.location.href = "https://tqqqka.github.io/a/";
+          }, 800);
+        }, 300);
+      }
+      
+      function showNotification(message) {
+        bannerText.textContent = message;
+        banner.classList.remove("hidden");
+        
+        setTimeout(() => {
+          banner.classList.add("hidden");
+        }, 2000);
+      }
+      
+      // Улучшенное предотвращение масштабирования при двойном тапе
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function(event) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+      
+      // Простая оптимизация для медленных устройств
+      if ('connection' in navigator) {
+        if (navigator.connection.saveData || 
+            (navigator.connection.effectiveType && 
+             navigator.connection.effectiveType.includes('2g'))) {
+          document.querySelectorAll('.circle').forEach(circle => {
+            circle.style.opacity = '0.15';
+            circle.style.filter = 'blur(20px)';
+          });
+        }
+      }
+      
+      // Добавляем класс для touch-устройств
+      if (isTouchDevice()) {
+        document.body.classList.add('touch-device');
+      }
+    });
+  </script>
 </body>
 </html>
