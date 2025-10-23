@@ -16,30 +16,32 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #121212;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            overflow: hidden;
         }
         
         .container {
             text-align: center;
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         .circle {
             width: 60px;
             height: 60px;
-            border: 3px solid #333;
-            border-top: 3px solid #fff;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #00ff88;
             border-radius: 50%;
             margin: 0 auto 20px;
-            animation: spin 1s linear infinite;
+            animation: spin 1.2s ease-in-out infinite;
         }
         
         .text {
@@ -47,87 +49,178 @@
             margin-bottom: 25px;
             min-height: 27px;
             font-weight: 300;
+            color: #e0e0e0;
         }
         
         .captcha-container {
             display: none;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 15px;
             margin: 20px 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .captcha-title {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: #e0e0e0;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 500;
         }
         
-        .captcha-challenge {
+        .captcha-instruction {
+            font-size: 14px;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        /* Стили для пазл-капчи */
+        .puzzle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+            gap: 15px;
+        }
+        
+        .puzzle-pieces {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 45%;
+        }
+        
+        .puzzle-piece {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            border-radius: 12px;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 24px;
             font-weight: bold;
-            letter-spacing: 3px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            color: #4CAF50;
-        }
-        
-        .captcha-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            background: rgba(0, 0, 0, 0.3);
             color: white;
-            font-size: 16px;
-            text-align: center;
-            margin: 10px 0;
-            outline: none;
-            transition: border 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            user-select: none;
         }
         
-        .captcha-input:focus {
-            border-color: #4CAF50;
+        .puzzle-piece:nth-child(2) {
+            background: linear-gradient(45deg, #4ecdc4, #00b894);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+        
+        .puzzle-piece:nth-child(3) {
+            background: linear-gradient(45deg, #45aaf2, #0984e3);
+            box-shadow: 0 5px 15px rgba(69, 170, 242, 0.3);
+        }
+        
+        .puzzle-piece:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .puzzle-piece:nth-child(2):hover {
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4);
+        }
+        
+        .puzzle-piece:nth-child(3):hover {
+            box-shadow: 0 8px 20px rgba(69, 170, 242, 0.4);
+        }
+        
+        .puzzle-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 45%;
+        }
+        
+        .puzzle-slot {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .puzzle-slot.hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #00ff88;
+        }
+        
+        .puzzle-slot.correct {
+            background: rgba(0, 255, 136, 0.2);
+            border: 2px solid #00ff88;
         }
         
         .captcha-button {
             width: 100%;
-            padding: 12px;
-            background: #4CAF50;
+            padding: 14px;
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
         }
         
         .captcha-button:hover {
-            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.4);
         }
         
         .captcha-button:disabled {
-            background: #666;
+            background: linear-gradient(45deg, #666, #888);
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         .error-message {
-            color: #f44336;
+            color: #ff6b6b;
             font-size: 14px;
-            margin-top: 10px;
+            margin-top: 15px;
             display: none;
+            font-weight: 500;
         }
         
         .success-message {
-            color: #4CAF50;
+            color: #00ff88;
             font-size: 16px;
-            margin-top: 15px;
+            margin-top: 20px;
             display: none;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            border-radius: 3px;
+            transition: width 0.5s ease;
         }
         
         @keyframes spin {
@@ -136,12 +229,41 @@
         }
         
         .fade-in {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.6s ease-out;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            opacity: 0;
         }
     </style>
 </head>
@@ -151,11 +273,29 @@
         <div class="text" id="statusText">Подождите...</div>
         
         <div class="captcha-container" id="captchaContainer">
-            <div class="captcha-title">Подтвердите, что вы не робот:</div>
-            <div class="captcha-challenge" id="captchaChallenge"></div>
-            <input type="text" class="captcha-input" id="captchaInput" placeholder="Введите текст выше" maxlength="6">
-            <button class="captcha-button" id="captchaButton">Подтвердить</button>
-            <div class="error-message" id="errorMessage">Неверный код! Попробуйте еще раз.</div>
+            <div class="captcha-title">Соберите пазл для подтверждения</div>
+            <div class="captcha-instruction">Перетащите элементы в правильном порядке</div>
+            
+            <div class="puzzle-container">
+                <div class="puzzle-pieces" id="puzzlePieces">
+                    <div class="puzzle-piece" draggable="true" data-value="3">3</div>
+                    <div class="puzzle-piece" draggable="true" data-value="1">1</div>
+                    <div class="puzzle-piece" draggable="true" data-value="2">2</div>
+                </div>
+                
+                <div class="puzzle-slots" id="puzzleSlots">
+                    <div class="puzzle-slot" data-correct="1">1</div>
+                    <div class="puzzle-slot" data-correct="2">2</div>
+                    <div class="puzzle-slot" data-correct="3">3</div>
+                </div>
+            </div>
+            
+            <button class="captcha-button" id="captchaButton" disabled>Проверить</button>
+            <div class="error-message" id="errorMessage">Порядок неправильный! Попробуйте еще раз.</div>
+        </div>
+        
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
         
         <div class="success-message" id="successMessage">Проверка пройдена! Перенаправляем...</div>
@@ -167,86 +307,128 @@
         const statusText = document.getElementById('statusText');
         const successMessage = document.getElementById('successMessage');
         const spinner = document.getElementById('spinner');
-        const captchaChallenge = document.getElementById('captchaChallenge');
-        const captchaInput = document.getElementById('captchaInput');
         const captchaButton = document.getElementById('captchaButton');
         const errorMessage = document.getElementById('errorMessage');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const puzzlePieces = document.getElementById('puzzlePieces');
+        const puzzleSlots = document.getElementById('puzzleSlots');
         
         let captchaPassed = false;
-        let currentCaptchaText = '';
         let redirectTimer = null;
+        let draggedPiece = null;
 
-        // Генерация случайной капчи
-        function generateCaptcha() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let result = '';
-            for (let i = 0; i < 6; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
+        // Перемешиваем элементы пазла
+        function shufflePuzzle() {
+            const piecesContainer = document.getElementById('puzzlePieces');
+            for (let i = piecesContainer.children.length; i >= 0; i--) {
+                piecesContainer.appendChild(piecesContainer.children[Math.random() * i | 0]);
             }
-            currentCaptchaText = result;
-            captchaChallenge.textContent = result;
         }
 
         // Показываем капчу через 1.5 секунды
         setTimeout(() => {
             if (!captchaPassed) {
-                statusText.textContent = "Пожалуйста, пройдите проверку";
-                generateCaptcha();
+                statusText.textContent = "Пройдите проверку безопасности";
                 captchaContainer.style.display = 'block';
                 captchaContainer.classList.add('fade-in');
-                captchaInput.focus();
+                shufflePuzzle();
             }
         }, 1500);
 
-        // Проверка капчи
-        function checkCaptcha() {
-            const userInput = captchaInput.value.toUpperCase().replace(/\s/g, '');
+        // Drag and Drop функционал
+        document.querySelectorAll('.puzzle-piece').forEach(piece => {
+            piece.addEventListener('dragstart', function(e) {
+                draggedPiece = this;
+                setTimeout(() => this.style.opacity = '0.4', 0);
+            });
             
-            if (userInput === currentCaptchaText) {
-                // Успешное прохождение
-                captchaPassed = true;
-                captchaContainer.style.display = 'none';
-                statusText.textContent = "Подождите...";
-                successMessage.style.display = 'block';
-                successMessage.classList.add('fade-in');
+            piece.addEventListener('dragend', function() {
+                this.style.opacity = '1';
+                draggedPiece = null;
+            });
+        });
+
+        document.querySelectorAll('.puzzle-slot').forEach(slot => {
+            slot.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('hover');
+            });
+            
+            slot.addEventListener('dragleave', function() {
+                this.classList.remove('hover');
+            });
+            
+            slot.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('hover');
                 
-                // Перенаправляем через 1.5 секунды после успешной капчи
-                redirectTimer = setTimeout(() => {
-                    window.location.href = "https://tqqqka.github.io/cvapta-choise/";
-                }, 1500);
-            } else {
-                // Неверный ввод
-                errorMessage.style.display = 'block';
-                captchaInput.value = '';
-                generateCaptcha();
-                captchaInput.focus();
+                if (draggedPiece) {
+                    // Проверяем, правильный ли элемент положен в слот
+                    const isCorrect = draggedPiece.dataset.value === this.dataset.correct;
+                    
+                    if (isCorrect) {
+                        this.innerHTML = draggedPiece.innerHTML;
+                        this.classList.add('correct');
+                        this.dataset.filled = 'true';
+                        draggedPiece.style.visibility = 'hidden';
+                        
+                        // Проверяем, все ли элементы на своих местах
+                        checkCompletion();
+                    } else {
+                        this.classList.add('shake');
+                        setTimeout(() => this.classList.remove('shake'), 500);
+                        errorMessage.style.display = 'block';
+                    }
+                }
+            });
+        });
+
+        // Проверка завершения пазла
+        function checkCompletion() {
+            const allSlots = document.querySelectorAll('.puzzle-slot');
+            const allFilled = Array.from(allSlots).every(slot => slot.dataset.filled === 'true');
+            
+            if (allFilled) {
+                captchaButton.disabled = false;
+                captchaButton.classList.add('pulse');
             }
         }
 
-        // Обработчики событий
-        captchaButton.addEventListener('click', checkCaptcha);
-        
-        captchaInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkCaptcha();
-            }
+        // Обработчик кнопки проверки
+        captchaButton.addEventListener('click', function() {
+            captchaPassed = true;
+            captchaContainer.style.display = 'none';
+            statusText.textContent = "Подождите...";
+            progressBar.style.display = 'block';
+            
+            // Анимация прогресс-бара
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 2;
+                progressFill.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    successMessage.style.display = 'block';
+                    successMessage.classList.add('fade-in');
+                    
+                    // Перенаправляем через 1 секунду
+                    redirectTimer = setTimeout(() => {
+                        window.location.href = "https://tqqqka.github.io/cvapta-choise/";
+                    }, 1000);
+                }
+            }, 30);
         });
 
-        // Обновление капчи при клике на текст
-        captchaChallenge.addEventListener('click', function() {
-            generateCaptcha();
-            captchaInput.value = '';
-            errorMessage.style.display = 'none';
-        });
-
-        // Дополнительная проверка на случай, если капча не потребовалась
+        // Дополнительная проверка
         setTimeout(() => {
             if (!captchaPassed && captchaContainer.style.display === 'none') {
                 statusText.textContent = "Загрузка завершена";
                 spinner.style.animation = 'none';
-                spinner.style.border = '3px solid #fff';
+                spinner.style.border = '3px solid #00ff88';
             }
-        }, 3000);
+        }, 5000);
     </script>
 </body>
 </html>
