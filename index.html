@@ -9,6 +9,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         
         body {
@@ -16,138 +18,134 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: #fff;
             overflow: hidden;
+            padding: 20px;
         }
         
         .container {
             text-align: center;
-            max-width: 500px;
-            width: 90%;
-            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            padding: 25px 20px;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .circle {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid #00ff88;
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #00ff88;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             animation: spin 1.2s ease-in-out infinite;
         }
         
         .text {
-            font-size: 18px;
-            margin-bottom: 25px;
-            min-height: 27px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            min-height: 24px;
             font-weight: 300;
             color: #e0e0e0;
+            line-height: 1.4;
         }
         
         .captcha-container {
             display: none;
             background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
+            padding: 20px 15px;
             border-radius: 15px;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .captcha-title {
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 15px;
             color: #ffffff;
             font-weight: 500;
         }
         
         .captcha-instruction {
-            font-size: 14px;
+            font-size: 13px;
             color: #b0b0b0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.4;
         }
         
-        /* Стили для пазл-капчи */
+        /* Адаптивный контейнер для пазла */
         .puzzle-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .puzzle-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 25px 0;
-            gap: 15px;
+            gap: 10px;
         }
         
-        .puzzle-pieces {
+        .puzzle-pieces, .puzzle-slots {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 45%;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
         }
         
         .puzzle-piece {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(45deg, #ff6b6b, #ffa500);
-            border-radius: 12px;
-            cursor: grab;
+            border-radius: 10px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: white;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
             user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+        
+        .puzzle-piece.active {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
         }
         
         .puzzle-piece:nth-child(2) {
             background: linear-gradient(45deg, #4ecdc4, #00b894);
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
         }
         
         .puzzle-piece:nth-child(3) {
             background: linear-gradient(45deg, #45aaf2, #0984e3);
-            box-shadow: 0 5px 15px rgba(69, 170, 242, 0.3);
-        }
-        
-        .puzzle-piece:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
-        }
-        
-        .puzzle-piece:nth-child(2):hover {
-            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4);
-        }
-        
-        .puzzle-piece:nth-child(3):hover {
-            box-shadow: 0 8px 20px rgba(69, 170, 242, 0.4);
-        }
-        
-        .puzzle-slots {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 45%;
+            box-shadow: 0 4px 10px rgba(69, 170, 242, 0.3);
         }
         
         .puzzle-slot {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             color: rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
         }
@@ -162,24 +160,31 @@
             border: 2px solid #00ff88;
         }
         
+        .puzzle-slot.filled {
+            border-style: solid;
+        }
+        
+        /* Улучшенная кнопка для мобильных */
         .captcha-button {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(45deg, #00ff88, #00cc6a);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 15px;
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+            -webkit-appearance: none;
+            min-height: 50px;
         }
         
-        .captcha-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.4);
+        .captcha-button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(0, 255, 136, 0.4);
         }
         
         .captcha-button:disabled {
@@ -191,26 +196,27 @@
         
         .error-message {
             color: #ff6b6b;
-            font-size: 14px;
-            margin-top: 15px;
+            font-size: 13px;
+            margin-top: 12px;
             display: none;
             font-weight: 500;
+            line-height: 1.3;
         }
         
         .success-message {
             color: #00ff88;
-            font-size: 16px;
-            margin-top: 20px;
+            font-size: 15px;
+            margin-top: 15px;
             display: none;
             font-weight: 500;
         }
         
         .progress-bar {
             width: 100%;
-            height: 6px;
+            height: 5px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 3px;
-            margin: 20px 0;
+            margin: 15px 0;
             overflow: hidden;
             display: none;
         }
@@ -223,47 +229,72 @@
             transition: width 0.5s ease;
         }
         
+        /* Медиа-запросы для очень маленьких экранов */
+        @media (max-width: 360px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .puzzle-piece, .puzzle-slot {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .captcha-button {
+                padding: 14px;
+                font-size: 15px;
+                min-height: 45px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
         .fade-in {
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.4s ease-out;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 1.5s infinite;
         }
         
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
         
         .shake {
-            animation: shake 0.5s ease-in-out;
+            animation: shake 0.4s ease-in-out;
         }
         
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
         
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ff6b6b;
-            border-radius: 50%;
-            opacity: 0;
+        /* Предотвращение масштабирования при двойном тапе */
+        .puzzle-piece {
+            -webkit-user-drag: none;
         }
     </style>
 </head>
@@ -274,24 +305,28 @@
         
         <div class="captcha-container" id="captchaContainer">
             <div class="captcha-title">Соберите пазл для подтверждения</div>
-            <div class="captcha-instruction">Перетащите элементы в правильном порядке</div>
+            <div class="captcha-instruction">Нажмите на элементы в правильном порядке: 1 → 2 → 3</div>
             
             <div class="puzzle-container">
-                <div class="puzzle-pieces" id="puzzlePieces">
-                    <div class="puzzle-piece" draggable="true" data-value="3">3</div>
-                    <div class="puzzle-piece" draggable="true" data-value="1">1</div>
-                    <div class="puzzle-piece" draggable="true" data-value="2">2</div>
+                <div class="puzzle-row">
+                    <div class="puzzle-pieces" id="puzzlePieces">
+                        <div class="puzzle-piece" data-value="3">3</div>
+                        <div class="puzzle-piece" data-value="1">1</div>
+                        <div class="puzzle-piece" data-value="2">2</div>
+                    </div>
                 </div>
                 
-                <div class="puzzle-slots" id="puzzleSlots">
-                    <div class="puzzle-slot" data-correct="1">1</div>
-                    <div class="puzzle-slot" data-correct="2">2</div>
-                    <div class="puzzle-slot" data-correct="3">3</div>
+                <div class="puzzle-row">
+                    <div class="puzzle-slots" id="puzzleSlots">
+                        <div class="puzzle-slot" data-correct="1">1</div>
+                        <div class="puzzle-slot" data-correct="2">2</div>
+                        <div class="puzzle-slot" data-correct="3">3</div>
+                    </div>
                 </div>
             </div>
             
             <button class="captcha-button" id="captchaButton" disabled>Проверить</button>
-            <div class="error-message" id="errorMessage">Порядок неправильный! Попробуйте еще раз.</div>
+            <div class="error-message" id="errorMessage">Порядок неправильный! Начните заново.</div>
         </div>
         
         <div class="progress-bar" id="progressBar">
@@ -316,14 +351,32 @@
         
         let captchaPassed = false;
         let redirectTimer = null;
-        let draggedPiece = null;
+        let currentOrder = [];
+        let correctOrder = ['1', '2', '3'];
 
         // Перемешиваем элементы пазла
         function shufflePuzzle() {
-            const piecesContainer = document.getElementById('puzzlePieces');
-            for (let i = piecesContainer.children.length; i >= 0; i--) {
-                piecesContainer.appendChild(piecesContainer.children[Math.random() * i | 0]);
+            const pieces = Array.from(puzzlePieces.children);
+            for (let i = pieces.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                puzzlePieces.appendChild(pieces[j]);
             }
+        }
+
+        // Сброс капчи
+        function resetCaptcha() {
+            currentOrder = [];
+            document.querySelectorAll('.puzzle-slot').forEach(slot => {
+                slot.classList.remove('correct', 'filled');
+                slot.innerHTML = slot.dataset.correct;
+            });
+            document.querySelectorAll('.puzzle-piece').forEach(piece => {
+                piece.style.visibility = 'visible';
+                piece.classList.remove('active');
+            });
+            captchaButton.disabled = true;
+            captchaButton.classList.remove('pulse');
+            errorMessage.style.display = 'none';
         }
 
         // Показываем капчу через 1.5 секунды
@@ -333,70 +386,51 @@
                 captchaContainer.style.display = 'block';
                 captchaContainer.classList.add('fade-in');
                 shufflePuzzle();
+                resetCaptcha();
             }
         }, 1500);
 
-        // Drag and Drop функционал
+        // Обработчики для элементов пазла (тап вместо drag&drop)
         document.querySelectorAll('.puzzle-piece').forEach(piece => {
-            piece.addEventListener('dragstart', function(e) {
-                draggedPiece = this;
-                setTimeout(() => this.style.opacity = '0.4', 0);
-            });
-            
-            piece.addEventListener('dragend', function() {
-                this.style.opacity = '1';
-                draggedPiece = null;
-            });
-        });
-
-        document.querySelectorAll('.puzzle-slot').forEach(slot => {
-            slot.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                this.classList.add('hover');
-            });
-            
-            slot.addEventListener('dragleave', function() {
-                this.classList.remove('hover');
-            });
-            
-            slot.addEventListener('drop', function(e) {
-                e.preventDefault();
-                this.classList.remove('hover');
+            piece.addEventListener('click', function() {
+                if (currentOrder.length >= 3) return;
                 
-                if (draggedPiece) {
-                    // Проверяем, правильный ли элемент положен в слот
-                    const isCorrect = draggedPiece.dataset.value === this.dataset.correct;
+                const value = this.dataset.value;
+                currentOrder.push(value);
+                
+                // Помечаем элемент как активный
+                this.classList.add('active');
+                
+                // Заполняем соответствующий слот
+                const targetSlot = document.querySelector(`.puzzle-slot[data-correct="${value}"]`);
+                if (targetSlot) {
+                    targetSlot.innerHTML = value;
+                    targetSlot.classList.add('filled');
                     
-                    if (isCorrect) {
-                        this.innerHTML = draggedPiece.innerHTML;
-                        this.classList.add('correct');
-                        this.dataset.filled = 'true';
-                        draggedPiece.style.visibility = 'hidden';
+                    // Проверяем правильность порядка
+                    if (currentOrder.length === 3) {
+                        const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correctOrder);
                         
-                        // Проверяем, все ли элементы на своих местах
-                        checkCompletion();
-                    } else {
-                        this.classList.add('shake');
-                        setTimeout(() => this.classList.remove('shake'), 500);
-                        errorMessage.style.display = 'block';
+                        if (isCorrect) {
+                            document.querySelectorAll('.puzzle-slot').forEach(slot => {
+                                slot.classList.add('correct');
+                            });
+                            captchaButton.disabled = false;
+                            captchaButton.classList.add('pulse');
+                        } else {
+                            errorMessage.style.display = 'block';
+                            // Автосброс через 1.5 секунды
+                            setTimeout(resetCaptcha, 1500);
+                        }
                     }
                 }
             });
         });
 
-        // Проверка завершения пазла
-        function checkCompletion() {
-            const allSlots = document.querySelectorAll('.puzzle-slot');
-            const allFilled = Array.from(allSlots).every(slot => slot.dataset.filled === 'true');
-            
-            if (allFilled) {
-                captchaButton.disabled = false;
-                captchaButton.classList.add('pulse');
-            }
-        }
-
         // Обработчик кнопки проверки
         captchaButton.addEventListener('click', function() {
+            if (captchaButton.disabled) return;
+            
             captchaPassed = true;
             captchaContainer.style.display = 'none';
             statusText.textContent = "Подождите...";
@@ -421,12 +455,15 @@
             }, 30);
         });
 
+        // Сброс при тапе на сообщение об ошибке
+        errorMessage.addEventListener('click', resetCaptcha);
+
         // Дополнительная проверка
         setTimeout(() => {
             if (!captchaPassed && captchaContainer.style.display === 'none') {
                 statusText.textContent = "Загрузка завершена";
                 spinner.style.animation = 'none';
-                spinner.style.border = '3px solid #00ff88';
+                spinner.style.border = '2px solid #00ff88';
             }
         }, 5000);
     </script>
